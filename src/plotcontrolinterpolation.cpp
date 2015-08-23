@@ -40,8 +40,8 @@ void PlotControlInterpolation::showPlotter() {
   _p->_view->showPlotter();
 }
 
-void PlotControlInterpolation::setBoundary(const bool& b) {
-  _p->_model->setBoundary(b);
+void PlotControlInterpolation::setBoundary(const int& b_type) {
+  _p->_model->setBoundary(b_type);
 }
 
 void PlotControlInterpolation::setPrecision(const float& w) {

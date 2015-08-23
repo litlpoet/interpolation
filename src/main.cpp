@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
   QApplication a(argc, argv);
 
   ML::TimeSeriesMap time_series_map;
-  DataSet3(&time_series_map);
+  DataSet2(&time_series_map);
 
   std::cout << "Make model and initialize with data" << std::endl;
   PlotModelInterface* model = new PlotModelInterpolation();
@@ -46,8 +46,8 @@ void DataSet1(ML::TimeSeriesMap* time_series_map) {
 }
 
 void DataSet2(ML::TimeSeriesMap* time_series_map) {
-  time_series_map->insert(ML::MakeTimeSample(0, 1, 0.0f));
-  time_series_map->insert(ML::MakeTimeSample(1, 1, 0.0f));
+  // time_series_map->insert(ML::MakeTimeSample(0, 1, 0.0f));
+  // time_series_map->insert(ML::MakeTimeSample(1, 1, 0.0f));
   time_series_map->insert(ML::MakeTimeSample(10, 1, 0.1f));
   time_series_map->insert(ML::MakeTimeSample(11, 1, 0.5f));
   time_series_map->insert(ML::MakeTimeSample(12, 1, 0.1f));
@@ -60,15 +60,16 @@ void DataSet2(ML::TimeSeriesMap* time_series_map) {
   time_series_map->insert(ML::MakeTimeSample(19, 1, 0.2f));
   time_series_map->insert(ML::MakeTimeSample(20, 1, 0.1f));
   time_series_map->insert(ML::MakeTimeSample(21, 1, 0.0f));
-  time_series_map->insert(ML::MakeTimeSample(98, 1, 0.0f));
-  time_series_map->insert(ML::MakeTimeSample(99, 1, 0.0f));
+  // time_series_map->insert(ML::MakeTimeSample(98, 1, 0.0f));
+  // time_series_map->insert(ML::MakeTimeSample(99, 1, 0.0f));
 }
 
 void DataSet3(ML::TimeSeriesMap* time_series_map) {
-  time_series_map->insert(ML::MakeTimeSample(0, 1, 0.0f));
-  time_series_map->insert(ML::MakeTimeSample(1, 1, 0.0f));
-  time_series_map->insert(ML::MakeTimeSample(50, 1, 1.3f));
+  // time_series_map->insert(ML::MakeTimeSample(0, 1, 0.0f));
+  // time_series_map->insert(ML::MakeTimeSample(1, 1, 0.0f));
+  // time_series_map->insert(ML::MakeTimeSample(25, 1, 1.5f));
   time_series_map->insert(ML::MakeTimeSample(51, 1, 1.5f));
-  time_series_map->insert(ML::MakeTimeSample(98, 1, 0.0f));
-  time_series_map->insert(ML::MakeTimeSample(99, 1, 0.0f));
+  // time_series_map->insert(ML::MakeTimeSample(75, 1, 1.5f));
+  // time_series_map->insert(ML::MakeTimeSample(98, 1, 0.0f));
+  // time_series_map->insert(ML::MakeTimeSample(99, 1, 0.0f));
 }

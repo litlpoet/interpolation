@@ -21,7 +21,7 @@ class PlotModelInterface {
   virtual void initializeModel(const int& frames,
                                const ML::TimeSeriesMap& time_series_map) = 0;
 
-  virtual void setBoundary(const bool& b) = 0;
+  virtual void setBoundary(const int& b_type) = 0;
 
   virtual void solve(const float& lambda) = 0;
 

@@ -2,6 +2,7 @@
 
 #include "src/plotviewinterpolation.h"
 
+#include <QtCore/QSignalMapper>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QLabel>
@@ -14,6 +15,7 @@ class PlotViewInterpolation::Imple {
  public:
   QRadioButton* _b1_rbtn;
   QRadioButton* _b2_rbtn;
+  QRadioButton* _b3_rbtn;
   QLabel* _lbl_weight;
   QLabel* _lbl_knot;
   QLabel* _lbl_level;
@@ -36,8 +38,9 @@ class PlotViewInterpolation::Imple {
   ~Imple() {}
 
   void createUi(PlotViewInterpolation* plot_view) {
-    _b1_rbtn = new QRadioButton("boundary", plot_view);
-    _b2_rbtn = new QRadioButton("no boundary", plot_view);
+    _b1_rbtn = new QRadioButton("no boundary", plot_view);
+    _b2_rbtn = new QRadioButton("c1 boundary", plot_view);
+    _b3_rbtn = new QRadioButton("c2 boundary", plot_view);
     _b1_rbtn->setDown(true);
 
     _lbl_weight = new QLabel("lambda", plot_view);
@@ -66,10 +69,16 @@ class PlotViewInterpolation::Imple {
     _sld_level->setValue(1);
     _sld_level->adjustSize();
 
-    QObject::connect(_b1_rbtn, &QRadioButton::toggled, plot_view,
-                     &PlotViewInterpolation::setBoundary);
-    QObject::connect(_b2_rbtn, &QRadioButton::toggled, plot_view,
-                     &PlotViewInterpolation::setNoBoundary);
+    QSignalMapper* signal_map = new QSignalMapper(plot_view);
+    signal_map->setMapping(_b1_rbtn, 0);  // no boundary
+    signal_map->setMapping(_b2_rbtn, 1);  // c1 boundary
+    signal_map->setMapping(_b3_rbtn, 2);  // c2 boundary
+
+    QObject::connect(_b1_rbtn, SIGNAL(clicked()), signal_map, SLOT(map()));
+    QObject::connect(_b2_rbtn, SIGNAL(clicked()), signal_map, SLOT(map()));
+    QObject::connect(_b3_rbtn, SIGNAL(clicked()), signal_map, SLOT(map()));
+    QObject::connect(signal_map, SIGNAL(mapped(int)), plot_view,
+                     SLOT(setBoundary(int)));
     QObject::connect(_sld_weight, &QSlider::valueChanged, plot_view,
                      &PlotViewInterpolation::changeWeight);
     QObject::connect(_sld_level, &QSlider::valueChanged, plot_view,
@@ -112,20 +121,17 @@ void PlotViewInterpolation::changeLevel(const int& l) {
   _p->_ctrl->setLevel(l);
 }
 
-void PlotViewInterpolation::setBoundary(const bool& b) {
-  if (b) _p->_ctrl->setBoundary(true);
-}
-
-void PlotViewInterpolation::setNoBoundary(const bool& b) {
-  if (b) _p->_ctrl->setBoundary(false);
+void PlotViewInterpolation::setBoundary(const int& b_type) {
+  _p->_ctrl->setBoundary(b_type);
 }
 
 void PlotViewInterpolation::resizeEvent(QResizeEvent* event) {
   int mid_x = width() / 2;
-  _p->_b1_rbtn->move(5, height() - 25);
-  _p->_b2_rbtn->move(90, height() - 25);
-  _p->_lbl_weight->move(200, height() - 25);
-  _p->_sld_weight->move(200 + _p->_lbl_weight->width(), height() - 30);
+  _p->_b1_rbtn->move(0, height() - 25);
+  _p->_b2_rbtn->move(100, height() - 25);
+  _p->_b3_rbtn->move(200, height() - 25);
+  _p->_lbl_weight->move(300, height() - 25);
+  _p->_sld_weight->move(300 + _p->_lbl_weight->width(), height() - 30);
   _p->_lbl_knot->move(mid_x, height() - 25);
   _p->_lbl_level->move(mid_x + _p->_lbl_knot->width(), height() - 25);
   _p->_sld_level->move(mid_x + _p->_lbl_knot->width() + _p->_lbl_level->width(),

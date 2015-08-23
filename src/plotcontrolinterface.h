@@ -16,7 +16,7 @@ class PlotControlInterface {
 
   virtual void showPlotter() = 0;
 
-  virtual void setBoundary(const bool& b) = 0;
+  virtual void setBoundary(const int& b_type) = 0;
 
   virtual void setPrecision(const float& w) = 0;
 

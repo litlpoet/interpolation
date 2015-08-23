@@ -18,7 +18,7 @@ class PlotControlInterpolation : public PlotControlInterface {
 
   void showPlotter() final;
 
-  void setBoundary(const bool& b) final;
+  void setBoundary(const int& b_type) final;
 
   void setPrecision(const float& w) final;
 

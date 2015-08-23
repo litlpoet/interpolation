@@ -63,9 +63,9 @@ void PlotModelInterpolation::initializeModel(
   _p->initializeFromData(frames, time_series_map);
 }
 
-void PlotModelInterpolation::setBoundary(const bool& b) {
+void PlotModelInterpolation::setBoundary(const int& b_type) {
   dynamic_cast<ML::GaussianInterpolationNoisy*>(_p->_interps[GAUSSIAN_NOISY])
-      ->setBoundaryConstraint(b);
+      ->setBoundaryConstraint(b_type);
   solve(_p->_prev_lambda);
 }
 

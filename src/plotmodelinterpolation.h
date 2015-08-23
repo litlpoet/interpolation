@@ -15,7 +15,7 @@ class PlotModelInterpolation : public PlotModelInterface {
   void initializeModel(const int& frames,
                        const ML::TimeSeriesMap& time_series_map) final;
 
-  void setBoundary(const bool& b) final;
+  void setBoundary(const int& b_type) final;
 
   void solve(const float& lambda) final;
 

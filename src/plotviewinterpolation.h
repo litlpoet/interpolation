@@ -11,6 +11,8 @@ class PlotModelInterface;
 class PlotControlInterface;
 
 class PlotViewInterpolation : public Plotter, public Observer {
+  Q_OBJECT
+
  public:
   PlotViewInterpolation(PlotModelInterface* model, PlotControlInterface* ctrl);
 
@@ -25,9 +27,7 @@ class PlotViewInterpolation : public Plotter, public Observer {
 
   void changeLevel(const int& l);
 
-  void setBoundary(const bool& b);
-
-  void setNoBoundary(const bool& b);
+  void setBoundary(const int& b_type);
 
  protected:
   void resizeEvent(QResizeEvent* event);
