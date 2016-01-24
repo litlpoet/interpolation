@@ -5,8 +5,8 @@
 #include <iostream>
 #include <vector>
 
-#include "src/plotmodelinterpolation.h"
 #include "src/plotcontrolinterpolation.h"
+#include "src/plotmodelinterpolation.h"
 
 void DataSet1(ML::TimeSeriesMap* time_series_map);
 void DataSet2(ML::TimeSeriesMap* time_series_map);
