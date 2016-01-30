@@ -17,8 +17,8 @@ if (WIN32)
   list(APPEND CMAKE_PREFIX_PATH "c:/Local/msys64/mingw64/")
   set(LIB_EIGEN3_DIR "c:/Local/include/eigen3")
 else()
-  list(APPEND CMAKE_PREFIX_PATH "/opt/qt5/5.5/gcc_64/")
-  set(LIB_EIGEN3_DIR "/usr/local/include/eigen3")
+  # list(APPEND CMAKE_PREFIX_PATH "/opt/qt5/5.5/gcc_64/")
+  set(LIB_EIGEN3_DIR "/usr/include/eigen3")
 endif()
 
 include_directories(SYSTEM
@@ -33,7 +33,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
     "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set(warnings "-Wall -Wextra -Werror")
+  set(warnings "-Wall -Wextra")
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   set(warnings "/W4 /WX /EHsc")
 endif()
