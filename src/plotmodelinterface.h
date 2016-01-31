@@ -18,14 +18,14 @@ class PlotModelInterface {
 
   virtual ~PlotModelInterface() {}
 
-  virtual void initializeModel(const int& frames,
-                               const ML::TimeSeriesMap& time_series_map) = 0;
+  virtual void initializeModel(int const& frames,
+                               ML::TimeSeriesMap const& time_series_map) = 0;
 
-  virtual void setBoundary(const int& b_type) = 0;
+  virtual void setBoundary(int const& b_type) = 0;
 
-  virtual void solve(const float& lambda) = 0;
+  virtual void solve(float const& lambda) = 0;
 
-  virtual void solve(const int& initial_knots, const int& level) = 0;
+  virtual void solve(int const& initial_knots, int const& level) = 0;
 
   virtual int numberOfInterpolators() = 0;
 
@@ -33,13 +33,13 @@ class PlotModelInterface {
 
   virtual int getDataDimension() = 0;
 
-  virtual void getSample(const int& d, const float& end_time,
+  virtual void getSample(int const& d, float const& end_time,
                          ML::MatNxN* P) = 0;
 
-  virtual void get1dCurve(const INTERP_TYPE& type, const int& d,
-                          const float& end_time, ML::MatNxN* C) = 0;
+  virtual void get1dCurve(INTERP_TYPE const& type, int const& d,
+                          float const& end_time, ML::MatNxN* C) = 0;
 
-  virtual void getMean(const INTERP_TYPE& type, ML::MatNxN* Mu) = 0;
+  virtual void getMean(INTERP_TYPE const& type, ML::MatNxN* Mu) = 0;
 
   virtual void getVariance(ML::MatNxN* Sigma) = 0;
 

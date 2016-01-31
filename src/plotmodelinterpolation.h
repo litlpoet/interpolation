@@ -12,14 +12,14 @@ class PlotModelInterpolation : public PlotModelInterface {
 
   ~PlotModelInterpolation();
 
-  void initializeModel(const int& frames,
-                       const ML::TimeSeriesMap& time_series_map) final;
+  void initializeModel(int const& frames,
+                       ML::TimeSeriesMap const& time_series_map) final;
 
-  void setBoundary(const int& b_type) final;
+  void setBoundary(int const& b_type) final;
 
-  void solve(const float& lambda) final;
+  void solve(float const& lambda) final;
 
-  void solve(const int& initial_knots, const int& level) final;
+  void solve(int const& initial_knots, int const& level) final;
 
   int numberOfInterpolators() final;
 
@@ -27,12 +27,12 @@ class PlotModelInterpolation : public PlotModelInterface {
 
   int getDataDimension() final;
 
-  void getSample(const int& d, const float& end_time, ML::MatNxN* P) final;
+  void getSample(int const& d, float const& end_time, ML::MatNxN* P) final;
 
-  void get1dCurve(const INTERP_TYPE& type, const int& d, const float& end_time,
+  void get1dCurve(INTERP_TYPE const& type, int const& d, float const& end_time,
                   ML::MatNxN* C) final;
 
-  void getMean(const INTERP_TYPE& type, ML::MatNxN* Mu) final;
+  void getMean(INTERP_TYPE const& type, ML::MatNxN* Mu) final;
 
   void getVariance(ML::MatNxN* Sigma) final;
 
