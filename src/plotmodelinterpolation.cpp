@@ -42,8 +42,8 @@ class PlotModelInterpolation::Imple {
     _interps[MULTILEVEL_B_SPLINE] =
         new ML::MultiLevelBSplineInterpolation(frames, time_series_map);
 
-    _interps[GAUSSIAN_NOISELESS]->solve(1.0f, &_mu_s[GAUSSIAN_NOISELESS]);
-    _interps[GAUSSIAN_NOISY]->solve(1.0f, &_mu_s[GAUSSIAN_NOISY]);
+    _interps[GAUSSIAN_NOISELESS]->solve(1.0f, 1.0f, &_mu_s[GAUSSIAN_NOISELESS]);
+    _interps[GAUSSIAN_NOISY]->solve(1.0f, 1.0f, &_mu_s[GAUSSIAN_NOISY]);
     _interps[MULTILEVEL_B_SPLINE]->solve(6, 2, &_mu_s[MULTILEVEL_B_SPLINE]);
 
     _data_dim = _interps[0]->dataDimension();
@@ -68,7 +68,7 @@ void PlotModelInterpolation::setBoundary(int const& b_type) {
 
 void PlotModelInterpolation::solve(float const& lambda) {
   _p->_prev_lambda = lambda;
-  _p->_interps[GAUSSIAN_NOISY]->solve(_p->_prev_lambda,
+  _p->_interps[GAUSSIAN_NOISY]->solve(_p->_prev_lambda, 1.0f,
                                       &_p->_mu_s[GAUSSIAN_NOISY], &_p->_Sigma);
   notifyObservers();
 }
