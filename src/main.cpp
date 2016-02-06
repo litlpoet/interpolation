@@ -18,11 +18,14 @@ int main(int argc, char* argv[]) {
   QApplication a(argc, argv);
 
   ML::TimeSeriesMap t_map;
-  DataSet2(&t_map);
+  DataSet1(&t_map);
+
+  int D = 100;
+  // int D = t_map.size() * gap;
 
   std::cout << "Make model and initialize with data" << std::endl;
   PlotModelInterface* model = new PlotModelInterpolation();
-  model->initializeModel(t_map.size() * gap, t_map);
+  model->initializeModel(D, t_map);
   std::cout << "Interpolation model initialized" << std::endl;
 
   PlotControlInterface* ctrl = new PlotControlInterpolation(model);

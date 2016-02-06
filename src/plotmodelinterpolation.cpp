@@ -41,8 +41,9 @@ class PlotModelInterpolation::Imple {
         new ML::GaussianInterpolationNoisy(frames, time_series_map);
     _interps[MULTILEVEL_B_SPLINE] =
         new ML::MultiLevelBSplineInterpolation(frames, time_series_map);
-
-    _interps[GAUSSIAN_NOISELESS]->solve(1.0f, 1.0f, &_mu_s[GAUSSIAN_NOISELESS]);
+    ML::MatNxN S;
+    _interps[GAUSSIAN_NOISELESS]->solve(1.0f, 1.0f, &_mu_s[GAUSSIAN_NOISELESS],
+                                        &S);
     _interps[GAUSSIAN_NOISY]->solve(1.0f, 1.0f, &_mu_s[GAUSSIAN_NOISY]);
     _interps[MULTILEVEL_B_SPLINE]->solve(6, 2, &_mu_s[MULTILEVEL_B_SPLINE]);
 
