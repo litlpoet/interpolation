@@ -16,11 +16,13 @@ class PlotControlInterface {
 
   virtual void showPlotter() = 0;
 
-  virtual void setBoundary(const int& b_type) = 0;
+  virtual void setBoundary(int const& b_type) = 0;
 
-  virtual void setPrecision(const float& w) = 0;
+  virtual void setPrecision(float const& w) = 0;
 
-  virtual void setLevel(const int& l) = 0;
+  virtual void setAlpha(float const& a) = 0;
+
+  virtual void setLevel(int const& l) = 0;
 };
 
 #endif  // SRC_PLOTCONTROLINTERFACE_H_

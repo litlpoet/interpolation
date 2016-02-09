@@ -23,7 +23,7 @@ class PlotModelInterface {
 
   virtual void setBoundary(int const& b_type) = 0;
 
-  virtual void solve(float const& lambda) = 0;
+  virtual void solve(float const& lambda, float const& alpha) = 0;
 
   virtual void solve(int const& initial_knots, int const& level) = 0;
 

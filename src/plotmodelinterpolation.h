@@ -17,7 +17,7 @@ class PlotModelInterpolation : public PlotModelInterface {
 
   void setBoundary(int const& b_type) final;
 
-  void solve(float const& lambda) final;
+  void solve(float const& lambda, float const& alpha) final;
 
   void solve(int const& initial_knots, int const& level) final;
 

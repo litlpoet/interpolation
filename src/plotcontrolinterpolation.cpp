@@ -10,6 +10,8 @@ class PlotControlInterpolation::Imple {
  public:
   int _prev_init_knot;
   int _prev_level;
+  float _lambda{1.0f};
+  float _alpha{1.0f};
   PlotModelInterface* _model;
   PlotViewInterpolation* _view;
 
@@ -40,15 +42,21 @@ void PlotControlInterpolation::showPlotter() {
   _p->_view->showPlotter();
 }
 
-void PlotControlInterpolation::setBoundary(const int& b_type) {
+void PlotControlInterpolation::setBoundary(int const& b_type) {
   _p->_model->setBoundary(b_type);
 }
 
-void PlotControlInterpolation::setPrecision(const float& w) {
-  _p->_model->solve(w);
+void PlotControlInterpolation::setPrecision(float const& w) {
+  _p->_lambda = w;
+  _p->_model->solve(w, _p->_alpha);
 }
 
-void PlotControlInterpolation::setLevel(const int& l) {
+void PlotControlInterpolation::setAlpha(float const& a) {
+  _p->_alpha = a;
+  _p->_model->solve(_p->_lambda, a);
+}
+
+void PlotControlInterpolation::setLevel(int const& l) {
   _p->_model->solve(_p->_prev_init_knot, l);
   _p->_prev_level = l;
 }

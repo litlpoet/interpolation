@@ -23,11 +23,13 @@ class PlotViewInterpolation : public Plotter, public Observer {
   void showPlotter();
 
  public slots:
-  void changeWeight(const int& w);
+  void changePrecision(int const& w);
 
-  void changeLevel(const int& l);
+  void changeAlpha(int const& a);
 
-  void setBoundary(const int& b_type);
+  void changeLevel(int const& l);
+
+  void setBoundary(int const& b_type);
 
  protected:
   void resizeEvent(QResizeEvent* event);

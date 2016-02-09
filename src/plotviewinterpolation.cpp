@@ -13,27 +13,20 @@
 
 class PlotViewInterpolation::Imple {
  public:
-  QRadioButton* _b1_rbtn;
-  QRadioButton* _b2_rbtn;
-  QRadioButton* _b3_rbtn;
-  QLabel* _lbl_weight;
-  QLabel* _lbl_knot;
-  QLabel* _lbl_level;
-  QSlider* _sld_weight;
-  QSlider* _sld_level;
+  QRadioButton* _b1_rbtn{nullptr};
+  QRadioButton* _b2_rbtn{nullptr};
+  QRadioButton* _b3_rbtn{nullptr};
+  QLabel* _lbl_weight{nullptr};
+  QLabel* _lbl_knot{nullptr};
+  QLabel* _lbl_level{nullptr};
+  QSlider* _sld_precision{nullptr};
+  QSlider* _sld_alpha{nullptr};
+  QSlider* _sld_level{nullptr};
   PlotModelInterface* _model;
   PlotControlInterface* _ctrl;
 
   Imple(PlotModelInterface* model, PlotControlInterface* ctrl)
-      : _b1_rbtn(nullptr),
-        _b2_rbtn(nullptr),
-        _lbl_weight(nullptr),
-        _lbl_knot(nullptr),
-        _lbl_level(nullptr),
-        _sld_weight(nullptr),
-        _sld_level(nullptr),
-        _model(model),
-        _ctrl(ctrl) {}
+      : _model(model), _ctrl(ctrl) {}
 
   ~Imple() {}
 
@@ -47,12 +40,19 @@ class PlotViewInterpolation::Imple {
     _lbl_weight->setAlignment(Qt::AlignRight);
     _lbl_weight->adjustSize();
 
-    _sld_weight = new QSlider(Qt::Horizontal, plot_view);
-    _sld_weight->setMinimum(1);
-    _sld_weight->setMaximum(1000);
-    _sld_weight->setTickInterval(1);
-    _sld_weight->setValue(20);
-    _sld_weight->adjustSize();
+    _sld_precision = new QSlider(Qt::Horizontal, plot_view);
+    _sld_precision->setMinimum(1);
+    _sld_precision->setMaximum(1000);
+    _sld_precision->setTickInterval(1);
+    _sld_precision->setValue(20);
+    _sld_precision->adjustSize();
+
+    _sld_alpha = new QSlider(Qt::Horizontal, plot_view);
+    _sld_alpha->setMinimum(1);
+    _sld_alpha->setMaximum(1000);
+    _sld_alpha->setTickInterval(1);
+    _sld_alpha->setValue(50);
+    _sld_alpha->adjustSize();
 
     _lbl_knot = new QLabel("initial knots", plot_view);
     _lbl_knot->setAlignment(Qt::AlignRight);
@@ -79,8 +79,10 @@ class PlotViewInterpolation::Imple {
     QObject::connect(_b3_rbtn, SIGNAL(clicked()), signal_map, SLOT(map()));
     QObject::connect(signal_map, SIGNAL(mapped(int)), plot_view,
                      SLOT(setBoundary(int)));
-    QObject::connect(_sld_weight, &QSlider::valueChanged, plot_view,
-                     &PlotViewInterpolation::changeWeight);
+    QObject::connect(_sld_precision, &QSlider::valueChanged, plot_view,
+                     &PlotViewInterpolation::changePrecision);
+    QObject::connect(_sld_alpha, &QSlider::valueChanged, plot_view,
+                     &PlotViewInterpolation::changeAlpha);
     QObject::connect(_sld_level, &QSlider::valueChanged, plot_view,
                      &PlotViewInterpolation::changeLevel);
   }
@@ -110,18 +112,24 @@ void PlotViewInterpolation::update() {
 
 void PlotViewInterpolation::showPlotter() { show(); }
 
-void PlotViewInterpolation::changeWeight(const int& w) {
+void PlotViewInterpolation::changePrecision(int const& w) {
   float real_w = static_cast<float>(w) / 20;
-  std::cout << "current weight: " << real_w << std::endl;
+  std::cout << "current precision: " << real_w << std::endl;
   _p->_ctrl->setPrecision(real_w);
 }
 
-void PlotViewInterpolation::changeLevel(const int& l) {
+void PlotViewInterpolation::changeAlpha(int const& a) {
+  float real_a = static_cast<float>(a) / 50;
+  std::cout << "current alpha: " << real_a << std::endl;
+  _p->_ctrl->setAlpha(real_a);
+}
+
+void PlotViewInterpolation::changeLevel(int const& l) {
   std::cout << "current level:" << l << std::endl;
   _p->_ctrl->setLevel(l);
 }
 
-void PlotViewInterpolation::setBoundary(const int& b_type) {
+void PlotViewInterpolation::setBoundary(int const& b_type) {
   _p->_ctrl->setBoundary(b_type);
 }
 
@@ -131,8 +139,9 @@ void PlotViewInterpolation::resizeEvent(QResizeEvent* event) {
   _p->_b2_rbtn->move(100, height() - 25);
   _p->_b3_rbtn->move(200, height() - 25);
   _p->_lbl_weight->move(300, height() - 25);
-  _p->_sld_weight->move(300 + _p->_lbl_weight->width(), height() - 30);
-  _p->_lbl_knot->move(mid_x, height() - 25);
+  _p->_sld_precision->move(300 + _p->_lbl_weight->width(), height() - 30);
+  _p->_sld_alpha->move(400 + _p->_lbl_weight->width(), height() - 30);
+  // _p->_lbl_knot->move(mid_x, height() - 25);
   _p->_lbl_level->move(mid_x + _p->_lbl_knot->width(), height() - 25);
   _p->_sld_level->move(mid_x + _p->_lbl_knot->width() + _p->_lbl_level->width(),
                        height() - 30);

@@ -16,6 +16,7 @@ class PlotModelInterpolation::Imple {
   int _frames{0};
   int _data_dim{0};
   float _prev_lambda{1.0f};
+  float _prev_alpha{1.0f};
   ML::MatNxN _Sigma;
   ML::TimeSeriesMap _time_series_map;
   std::vector<ML::MatNxN> _mu_s;
@@ -64,12 +65,13 @@ void PlotModelInterpolation::initializeModel(
 void PlotModelInterpolation::setBoundary(int const& b_type) {
   dynamic_cast<ML::GaussianInterpolationNoisy*>(_p->_interps[GAUSSIAN_NOISY])
       ->setBoundaryConstraint(b_type);
-  solve(_p->_prev_lambda);
+  solve(_p->_prev_lambda, _p->_prev_alpha);
 }
 
-void PlotModelInterpolation::solve(float const& lambda) {
+void PlotModelInterpolation::solve(float const& lambda, float const& alpha) {
   _p->_prev_lambda = lambda;
-  _p->_interps[GAUSSIAN_NOISY]->solve(_p->_prev_lambda, 1.0f,
+  _p->_prev_alpha = alpha;
+  _p->_interps[GAUSSIAN_NOISY]->solve(_p->_prev_lambda, _p->_prev_alpha,
                                       &_p->_mu_s[GAUSSIAN_NOISY], &_p->_Sigma);
   notifyObservers();
 }

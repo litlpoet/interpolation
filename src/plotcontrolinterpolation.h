@@ -18,11 +18,13 @@ class PlotControlInterpolation : public PlotControlInterface {
 
   void showPlotter() final;
 
-  void setBoundary(const int& b_type) final;
+  void setBoundary(int const& b_type) final;
 
-  void setPrecision(const float& w) final;
+  void setPrecision(float const& w) final;
 
-  void setLevel(const int& l) final;
+  void setAlpha(float const& a) final;
+
+  void setLevel(int const& l) final;
 
  private:
   class Imple;

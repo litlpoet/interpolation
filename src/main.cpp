@@ -36,7 +36,6 @@ int main(int argc, char* argv[]) {
 }
 
 void DataSet1(ML::TimeSeriesMap* t_map) {
-  t_map->insert(ML::MakeTimeSample(1, 1, 0.1f));
   t_map->insert(ML::MakeTimeSample(10, 1, 0.5f));
   t_map->insert(ML::MakeTimeSample(11, 1, 1.1f));
   t_map->insert(ML::MakeTimeSample(13, 1, 1.3f));
