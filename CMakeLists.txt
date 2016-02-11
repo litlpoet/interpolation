@@ -48,7 +48,7 @@ endif()
 file(GLOB SOURCES src/*.cpp)
 add_executable(interpolation src/main.cpp ${SOURCES} ${RESOURCES})
 target_link_libraries(interpolation
-  Qt5::Core Qt5::Gui Qt5::Widgets MLCore MLInterpolation plotter)
+  Qt5::Core Qt5::Gui Qt5::Widgets MLCore MLInterpolation MLRegression plotter)
 target_compile_features(interpolation PRIVATE cxx_range_for)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

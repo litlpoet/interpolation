@@ -5,6 +5,7 @@
 #include <MLInterpolation/gaussianinterpolation.h>
 #include <MLInterpolation/gaussianinterpolationnoisy.h>
 #include <MLInterpolation/multilevelbsplineinterpolation.h>
+#include <MLRegression/gaussianprocess.h>
 #include <vector>
 #include <algorithm>
 #include <iostream>
