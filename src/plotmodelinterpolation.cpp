@@ -6,6 +6,7 @@
 #include <MLInterpolation/gaussianinterpolationnoisy.h>
 #include <MLInterpolation/multilevelbsplineinterpolation.h>
 #include <MLRegression/gaussianprocess.h>
+#include <MLRegression/gpoptimizerrprop.h>
 #include <vector>
 #include <algorithm>
 #include <iostream>
@@ -53,11 +54,10 @@ class PlotModelInterpolation::Imple {
     _interps[MULTILEVEL_B_SPLINE]->solve(6, 2, &_mu_s[MULTILEVEL_B_SPLINE]);
     _data_dim = _interps[0]->dataDimension();
 
-    std::cout << "regressor create:" << std::endl;
     _regressor = new ML::GPRegression(frames, time_series_map);
-    std::cout << "regressor created:" << std::endl;
+    ML::GPOptimizerRprop opt;
+    opt.maximize(dynamic_cast<ML::GPRegression*>(_regressor), 200, true);
     _regressor->solve(&_mu_gp);
-    std::cout << "regressor solved finished" << std::endl;
   }
 };
 

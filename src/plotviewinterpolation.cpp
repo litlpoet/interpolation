@@ -106,7 +106,7 @@ void PlotViewInterpolation::update() {
       INTERP_TYPE type = static_cast<INTERP_TYPE>(t);
       _p->_model->get1dCurve(type, d, 10.0f, &C);
       clearCurve(c_id);
-      setCurveData(c_id, C);
+      setCurveData(c_id, C, t);
     }
   }
 
@@ -114,7 +114,7 @@ void PlotViewInterpolation::update() {
     int c_id = n * TOTAL_INTERP + d;
     _p->_model->get1dRegression(d, 10.0f, &C);
     clearCurve(c_id);
-    setCurveData(c_id, C);
+    setCurveData(c_id, C, TOTAL_INTERP);
   }
 }
 
