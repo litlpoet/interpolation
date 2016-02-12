@@ -22,6 +22,8 @@ class PlotModelInterpolation::Imple {
   ML::TimeSeriesMap _time_series_map;
   std::vector<ML::MatNxN> _mu_s;
   std::vector<ML::Interpolation*> _interps;  // owned by this class
+  ML::Regression* _regressor;
+  ML::MatNxN _mu_gp;
   std::vector<Observer*> _observers;
 
   Imple() {}
@@ -29,6 +31,7 @@ class PlotModelInterpolation::Imple {
   ~Imple() {
     for (auto it : _interps)
       if (it != nullptr) delete it;
+    if (_regressor) delete _regressor;
   }
 
   void initializeFromData(int const& frames,
@@ -48,8 +51,13 @@ class PlotModelInterpolation::Imple {
                                         &S);
     _interps[GAUSSIAN_NOISY]->solve(1.0f, 1.0f, &_mu_s[GAUSSIAN_NOISY]);
     _interps[MULTILEVEL_B_SPLINE]->solve(6, 2, &_mu_s[MULTILEVEL_B_SPLINE]);
-
     _data_dim = _interps[0]->dataDimension();
+
+    std::cout << "regressor create:" << std::endl;
+    _regressor = new ML::GPRegression(frames, time_series_map);
+    std::cout << "regressor created:" << std::endl;
+    _regressor->solve(&_mu_gp);
+    std::cout << "regressor solved finished" << std::endl;
   }
 };
 
@@ -105,6 +113,14 @@ void PlotModelInterpolation::get1dCurve(INTERP_TYPE const& type, int const& d,
   C->resize(_p->_mu_s[type].rows(), 2);
   (*C) << ML::VecN::LinSpaced(_p->_mu_s[type].rows(), 0.0, end_time),
       _p->_mu_s[type].col(d);
+}
+
+void PlotModelInterpolation::get1dRegression(int const& d,
+                                             float const& end_time,
+                                             ML::MatNxN* C) {
+  C->resize(_p->_mu_gp.rows(), 2);
+  (*C) << ML::VecN::LinSpaced(_p->_mu_gp.rows(), 0.0, end_time),
+      _p->_mu_gp.col(d);
 }
 
 void PlotModelInterpolation::getMean(INTERP_TYPE const& type, ML::MatNxN* Mu) {

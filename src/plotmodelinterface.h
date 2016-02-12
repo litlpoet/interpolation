@@ -39,6 +39,9 @@ class PlotModelInterface {
   virtual void get1dCurve(INTERP_TYPE const& type, int const& d,
                           float const& end_time, ML::MatNxN* C) = 0;
 
+  virtual void get1dRegression(int const& d, float const& end_time,
+                               ML::MatNxN* C) = 0;
+
   virtual void getMean(INTERP_TYPE const& type, ML::MatNxN* Mu) = 0;
 
   virtual void getVariance(ML::MatNxN* Sigma) = 0;

@@ -32,6 +32,9 @@ class PlotModelInterpolation : public PlotModelInterface {
   void get1dCurve(INTERP_TYPE const& type, int const& d, float const& end_time,
                   ML::MatNxN* C) final;
 
+  void get1dRegression(int const& d, float const& end_time,
+                       ML::MatNxN* C) final;
+
   void getMean(INTERP_TYPE const& type, ML::MatNxN* Mu) final;
 
   void getVariance(ML::MatNxN* Sigma) final;

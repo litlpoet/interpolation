@@ -99,14 +99,22 @@ PlotViewInterpolation::~PlotViewInterpolation() {}
 
 void PlotViewInterpolation::update() {
   ML::MatNxN C;
+  int const& n = _p->_model->getDataDimension();
   for (int t = 0; t < TOTAL_INTERP; ++t) {
-    for (int d = 0, n = _p->_model->getDataDimension(); d < n; ++d) {
+    for (int d = 0; d < n; ++d) {
       int c_id = n * t + d;
       INTERP_TYPE type = static_cast<INTERP_TYPE>(t);
       _p->_model->get1dCurve(type, d, 10.0f, &C);
       clearCurve(c_id);
       setCurveData(c_id, C);
     }
+  }
+
+  for (int d = 0, n = _p->_model->getDataDimension(); d < n; ++d) {
+    int c_id = n * TOTAL_INTERP + d;
+    _p->_model->get1dRegression(d, 10.0f, &C);
+    clearCurve(c_id);
+    setCurveData(c_id, C);
   }
 }
 
